@@ -13,4 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'mainController@main');
+Route::match(['post','get'],'/', 'mainController@main');
