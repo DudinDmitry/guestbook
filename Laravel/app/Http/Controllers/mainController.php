@@ -18,15 +18,21 @@ class mainController extends Controller
             $new->author = $request->author;
 
             $new->save();
-            $request->session()->flash('message','Сообщение успешно добавлено');
+            $request->session()->flash('message', 'Сообщение успешно добавлено');
 
         }
-        $post = Guestbook::orderBy('created_at','desc')->get();
+        $post = Guestbook::orderBy('created_at', 'desc')->get();
+        echo '!!!';
         return view('guest', [
             'message' => $request->message,
             'author' => $request->author,
             'post' => $post,
 
         ]);
+    }
+
+    public function moderator()
+    {
+        return '!!';
     }
 }

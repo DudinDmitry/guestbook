@@ -14,3 +14,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::match(['post','get'],'/', 'mainController@main');
+Route::get('/moderator',['mainController@moderator']);
