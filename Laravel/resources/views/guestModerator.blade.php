@@ -1,6 +1,11 @@
 <body style="align: center">
 <h1>Гостевая книга</h1>
-
+@if(Session::has('message'))
+    <p style="color: green">{{Session::get('message')}}</p>
+@endif
+@if(sizeof($deleted))
+    <a href="moderator/deleted-post" style="margin: 5px;">Восстановить удалённые записи</a><br><br>
+@endif
 <div style="width: 600px;border: 1px solid gray;">
 
     @foreach($posts as $elem)

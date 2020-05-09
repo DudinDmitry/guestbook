@@ -32,27 +32,38 @@ class mainController extends Controller
 
     public function moderator()
     {
-        $posts=Guestbook::orderBy('created_at','desc')->get();
-        $i=0;
-        return view('guestModerator',[
-            'posts'=>$posts,
-            'i'=>$i,
+        $posts = Guestbook::orderBy('created_at', 'desc')->get();
+        $i = 0;
+
+        $deleted = Guestbook::onlyTrashed()->get();
+
+        return view('guestModerator', [
+            'posts' => $posts,
+            'i' => $i,
+            'deleted' => $deleted
         ]);
     }
-    public function delete($id)
+    public function deletedPost()
     {
-        return $id;
+        return view('deletedPost');
     }
+    public function delete(Request $request, $id)
+    {
+        Guestbook::find($id)->delete();
+        $request->session()->flash('message', 'Сообщение ' . $id . ' успешно удалено');
+        return redirect('/moderator');
+    }
+
     public function edit($id)
     {
-        return 'edit'.$id;
+
     }
+
     public static function bgColorTable($num)
     {
-        $bg='white';
-        if($num%2==0)
-        {
-            $bg='WhiteSmoke';
+        $bg = 'white';
+        if ($num % 2 == 0) {
+            $bg = 'WhiteSmoke';
         }
         return $bg;
     }
