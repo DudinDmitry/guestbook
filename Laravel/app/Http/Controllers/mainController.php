@@ -22,7 +22,6 @@ class mainController extends Controller
 
         }
         $post = Guestbook::orderBy('created_at', 'desc')->get();
-        echo '!!!';
         return view('guest', [
             'message' => $request->message,
             'author' => $request->author,
@@ -33,6 +32,28 @@ class mainController extends Controller
 
     public function moderator()
     {
-        return '!!';
+        $posts=Guestbook::orderBy('created_at','desc')->get();
+        $i=0;
+        return view('guestModerator',[
+            'posts'=>$posts,
+            'i'=>$i,
+        ]);
+    }
+    public function delete($id)
+    {
+        return $id;
+    }
+    public function edit($id)
+    {
+        return 'edit'.$id;
+    }
+    public static function bgColorTable($num)
+    {
+        $bg='white';
+        if($num%2==0)
+        {
+            $bg='WhiteSmoke';
+        }
+        return $bg;
     }
 }
