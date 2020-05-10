@@ -43,10 +43,28 @@ class mainController extends Controller
             'deleted' => $deleted
         ]);
     }
+
     public function deletedPost()
     {
-        return view('deletedPost');
+        $deletedPost = Guestbook::onlyTrashed()->get();
+        return view('deletedPost', [
+            'deletedPost' => $deletedPost
+        ]);
     }
+
+    public function endDelete($id)
+    {
+        Guestbook::onlyTrashed($id)->forceDelete();
+        return redirect('/moderator/deleted-post');
+    }
+
+    public function recovery(Request $request, $id)
+    {
+        Guestbook::onlyTrashed($id)->restore();
+        $request->session()->flash('message', 'Сообщение ' . $id . ' восстановленно');
+        return redirect('/moderator');
+    }
+
     public function delete(Request $request, $id)
     {
         Guestbook::find($id)->delete();
@@ -56,7 +74,8 @@ class mainController extends Controller
 
     public function edit($id)
     {
-
+        $post=Guestbook::find($id)->get();
+        $post[0]->author;
     }
 
     public static function bgColorTable($num)
