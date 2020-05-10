@@ -1,6 +1,7 @@
 <body style="align: center">
 <center>
     <h1>Гостевая книга</h1>
+    <a href="moderator">Панель управления</a>
     @if(Session::has('message'))
     <p style="color: green">{{Session::get('message')}}</p>
     @endif

@@ -72,10 +72,20 @@ class mainController extends Controller
         return redirect('/moderator');
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $post=Guestbook::find($id)->get();
-        $post[0]->author;
+        $message = Guestbook::find($id);
+        if ($request->has('form')) {
+            $message->author = $request->author;
+            $message->message = $request->message;
+
+            $message->save();
+            echo 'Статья успешно отредактированна<br>
+<a href="..">Вернуться к панели модератора</a>';
+        }
+        return view('editPost', [
+            'message' => $message
+        ]);
     }
 
     public static function bgColorTable($num)
